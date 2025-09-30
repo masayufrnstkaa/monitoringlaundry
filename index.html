@@ -403,7 +403,7 @@
                         </div>
                         <div class="form-group">
                             <label for="berat">Berat (Kg)</label>
-                            <input type="number" id="berat" placeholder="Contoh: 5" required>
+                            <input type="text" id="berat" placeholder="Contoh: 5,5 atau 5.5" required>
                         </div>
                         <div class="form-group">
                             <label for="harga">Harga per Kg (Rp)</label>
@@ -510,7 +510,11 @@
             let totalPengeluaranBulanan = 0;
 
             laundryData.forEach((data, index) => {
-                let total = data.berat * data.harga;
+                // Perbaikan: Menggunakan parseFloat() dan mengganti koma dengan titik
+                const berat = parseFloat(data.berat.toString().replace(',', '.'));
+                const harga = parseFloat(data.harga);
+                const total = berat * harga;
+
                 totalPendapatan += total;
                 let tanggal = new Date(data.tanggal);
 
@@ -578,7 +582,8 @@
             e.preventDefault();
             const nama = document.getElementById("nama").value;
             const nomor = document.getElementById("nomor").value;
-            const berat = parseInt(document.getElementById("berat").value);
+            // Perbaikan: Mengambil nilai dari input teks dan memprosesnya
+            const berat = document.getElementById("berat").value.replace(',', '.');
             const harga = parseInt(document.getElementById("harga").value);
             const tanggal = document.getElementById("tanggal").value;
             const editIndex = document.getElementById("editIndexLaundry").value;
@@ -586,7 +591,7 @@
             const newData = {
                 nama,
                 nomor,
-                berat,
+                berat, // Simpan sebagai string agar format koma/titik tetap
                 harga,
                 tanggal
             };
@@ -680,7 +685,10 @@
         downloadBtn.addEventListener("click", () => {
             let csv = "No,Nama,No WA,Berat (Kg),Harga (Rp),Total,Tanggal\n";
             laundryData.forEach((d, i) => {
-                csv += `${i + 1},${d.nama},${d.nomor},${d.berat},${d.harga},${d.berat * d.harga},${d.tanggal}\n`;
+                // Perbaikan: Menggunakan parseFloat() untuk perhitungan CSV
+                const berat = parseFloat(d.berat.toString().replace(',', '.'));
+                const total = berat * d.harga;
+                csv += `${i + 1},${d.nama},${d.nomor},${d.berat},${d.harga},${total},${d.tanggal}\n`;
             });
 
             csv += "\nData Pengeluaran\nNo,Keterangan,Total,Tanggal\n";
