@@ -2,740 +2,982 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Keuangan Laundry</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-            --bg-color: #ecf0f1;
-            --card-bg: #ffffff;
-            --text-dark: #333;
-            --text-light: #f8f9fa;
-            --shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            --border-radius: 12px;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            color: var(--text-light);
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-        
-        header h1 {
-            margin: 0;
-            font-weight: 700;
-        }
-        
-        .container {
-            padding: 2rem 1rem;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        @media (min-width: 768px) {
-            .cards {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .card {
-            color: var(--text-light);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-        }
-        
-        .card h4,
-        .card p,
-        .card-icon {
-            color: var(--text-light);
-        }
-        
-        .card h4 {
-            margin: 0 0 0.5rem;
-            font-weight: 600;
-        }
-        
-        .card p {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .card-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        #pendapatanHarian.card {
-            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
-        }
-        
-        #pendapatanBulanan.card {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-        }
-        
-        #penghasilanBersih.card {
-            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
-        }
-        
-        #pendapatanTahunan.card {
-            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
-        }
-        
-        #pengeluaranBulanan.card {
-            background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
-        }
-        
-        #pendapatanTotal.card {
-            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
-        }
-        
-        .form-section {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-        
-        .form-section h3 {
-            margin-top: 0;
-            font-weight: 600;
-            color: var(--secondary-color);
-        }
-        /* New styles for side-by-side forms */
-        
-        .form-container-wrapper {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .form-container {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .form-toggle {
-            cursor: pointer;
-            padding: 1rem;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-        
-        .form-toggle:hover {
-            background-color: #e9ecef;
-        }
-        
-        .form-toggle i {
-            transition: transform 0.3s ease;
-        }
-        
-        .form-toggle.active i {
-            transform: rotate(180deg);
-        }
-        
-        form {
-            display: none;
-            /* Initially hide the forms */
-        }
-        
-        form.active {
-            display: grid;
-        }
-        
-        form {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        button {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-        
-        button {
-            cursor: pointer;
-            border: none;
-            color: var(--text-light);
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 1rem;
-        }
-        
-        #laundryForm button {
-            background: var(--primary-color);
-        }
-        
-        #laundryForm button:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        #pengeluaranForm button {
-            background: #e67e22;
-        }
-        
-        #pengeluaranForm button:hover {
-            background: #d35400;
-            transform: translateY(-2px);
-        }
-        
-        #downloadBtn {
-            background: #27ae60;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            display: inline-block;
-        }
-        
-        #downloadBtn:hover {
-            background: #2ecc71;
-            transform: translateY(-2px);
-        }
-        
-        .table-section {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-        
-        .table-section h3 {
-            margin-top: 0;
-            font-weight: 600;
-            color: var(--secondary-color);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1.5rem;
-        }
-        
-        table th,
-        table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        table thead tr {
-            background-color: #f5f5f5;
-        }
-        
-        table th {
-            font-weight: 600;
-            color: var(--secondary-color);
-        }
-        
-        table tbody tr:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .action-buttons button {
-            padding: 0.5rem 0.8rem;
-            font-size: 0.85rem;
-            margin-top: 0;
-        }
-        
-        .edit {
-            background: #f39c12;
-        }
-        
-        .edit:hover {
-            background: #e67e22;
-        }
-        
-        .delete {
-            background: #e74c3c;
-        }
-        
-        .delete:hover {
-            background: #c0392b;
-        }
-        
-        .whatsapp {
-            background: #25d366;
-        }
-        
-        .whatsapp:hover {
-            background: #128c7e;
-        }
-        
-        @media (max-width: 768px) {
-            .cards,
-            .form-container-wrapper {
-                grid-template-columns: 1fr;
-                flex-direction: column;
-            }
-            .form-container {
-                min-width: 100%;
-            }
-            form {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Keuangan Laundry</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f6f8ff;
+      --bg2: #eef3ff;
+      --card: rgba(255, 255, 255, 0.82);
+      --card2: rgba(255, 255, 255, 0.92);
+      --stroke: rgba(15, 23, 42, 0.10);
+
+      --text: #0f172a;
+      --muted: rgba(15, 23, 42, 0.65);
+
+      --radius: 18px;
+      --radius2: 14px;
+
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.10);
+      --shadow2: 0 10px 26px rgba(15, 23, 42, 0.08);
+
+      --ring: 0 0 0 4px rgba(99, 102, 241, 0.18);
+      --accent: #6366f1;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(14px) scale(.985); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes shimmer {
+      0%   { transform: translateX(-130%) rotate(12deg); opacity: 0; }
+      25%  { opacity: .35; }
+      100% { transform: translateX(130%) rotate(12deg); opacity: 0; }
+    }
+
+    @keyframes expandDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      background:
+        radial-gradient(1100px 520px at 15% -10%, rgba(99, 102, 241, .22), transparent 58%),
+        radial-gradient(900px 520px at 90% 0%, rgba(34, 197, 94, .18), transparent 60%),
+        radial-gradient(900px 520px at 60% 110%, rgba(244, 63, 94, .12), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+    }
+
+    /* ===== Sticky Header ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(246, 248, 255, 0.70);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .topbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      box-shadow: var(--shadow2);
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255, 255, 255, .8), transparent 60%),
+        linear-gradient(135deg, #22c55e, #3b82f6, #a855f7);
+    }
+
+    .logo i { color: rgba(255, 255, 255, 0.95); }
+
+    .title-wrap { min-width: 0; }
+
+    .title-wrap h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: .2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .title-wrap p {
+      margin: 2px 0 0;
+      font-size: .88rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: rgba(255, 255, 255, 0.70);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(15, 23, 42, 0.16);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
+    }
+
+    .btn:active { transform: translateY(0); }
+
+    /* id tetap sama untuk JS download */
+    #downloadBtn.btn-primary {
+      background: linear-gradient(135deg, #22c55e, #3b82f6, #a855f7);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      color: white;
+      box-shadow: 0 14px 30px rgba(59, 130, 246, 0.18);
+    }
+
+    #downloadBtn.btn-primary:hover {
+      box-shadow: 0 18px 38px rgba(59, 130, 246, 0.24);
+      filter: brightness(1.03);
+    }
+
+    /* ===== Layout ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 16px 60px;
+    }
+
+    /* ===== Cards ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .card {
+      grid-column: span 12;
+      padding: 16px 16px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      background: var(--card);
+      box-shadow: var(--shadow2);
+      position: relative;
+      overflow: hidden;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      animation: floatIn .65s ease both;
+    }
+
+    /* stagger */
+    .cards .card:nth-child(1) { animation-delay: .05s; }
+    .cards .card:nth-child(2) { animation-delay: .10s; }
+    .cards .card:nth-child(3) { animation-delay: .15s; }
+    .cards .card:nth-child(4) { animation-delay: .20s; }
+    .cards .card:nth-child(5) { animation-delay: .25s; }
+    .cards .card:nth-child(6) { animation-delay: .30s; }
+
+    .card:hover {
+      transform: translateY(-3px) scale(1.01);
+      border-color: rgba(15, 23, 42, 0.16);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -70px;
+      background: radial-gradient(260px 160px at 15% 10%, rgba(255, 255, 255, .85), transparent 60%);
+      transform: rotate(12deg);
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -60%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
+      transform: rotate(12deg);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card:hover::after { animation: shimmer 1.2s ease; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .card h4 {
+      margin: 0;
+      font-size: .92rem;
+      font-weight: 800;
+      color: rgba(15, 23, 42, 0.78);
+    }
+
+    .card p {
+      margin: 8px 0 0;
+      font-size: 1.35rem;
+      font-weight: 1000;
+      letter-spacing: .2px;
+      position: relative;
+      z-index: 1;
+      color: #0b1220;
+    }
+
+    /* === warna unik per card (light) === */
+    #pendapatanHarian { background: linear-gradient(135deg, rgba(59, 130, 246, .16), rgba(255, 255, 255, .85)); }
+    #pendapatanBulanan { background: linear-gradient(135deg, rgba(34, 197, 94, .14), rgba(255, 255, 255, .85)); }
+    #penghasilanBersih { background: linear-gradient(135deg, rgba(245, 158, 11, .14), rgba(255, 255, 255, .85)); }
+    #pendapatanTahunan { background: linear-gradient(135deg, rgba(168, 85, 247, .14), rgba(255, 255, 255, .85)); }
+    #pengeluaranBulanan { background: linear-gradient(135deg, rgba(244, 63, 94, .12), rgba(255, 255, 255, .85)); }
+    #pendapatanTotal { background: linear-gradient(135deg, rgba(20, 184, 166, .12), rgba(255, 255, 255, .85)); }
+
+    /* icon accent */
+    #pendapatanHarian .card-icon i { color: #3b82f6; }
+    #pendapatanBulanan .card-icon i { color: #22c55e; }
+    #penghasilanBersih .card-icon i { color: #f59e0b; }
+    #pendapatanTahunan .card-icon i { color: #a855f7; }
+    #pengeluaranBulanan .card-icon i { color: #f43f5e; }
+    #pendapatanTotal .card-icon i { color: #14b8a6; }
+
+    @media (min-width: 700px) {
+      .card { grid-column: span 6; }
+    }
+
+    @media (min-width: 1024px) {
+      .card { grid-column: span 4; }
+    }
+
+    /* ===== Sections ===== */
+    .section {
+      background: var(--card2);
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: floatIn .6s ease both;
+    }
+
+    .section + .section { margin-top: 16px; }
+
+    .section-header {
+      padding: 16px 16px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .section-header h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 1000;
+      letter-spacing: .2px;
+    }
+
+    .section-header .hint {
+      margin: 0;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* ===== Forms ===== */
+    .form-container-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    @media (min-width: 980px) {
+      .form-container-wrapper { grid-template-columns: 1fr 1fr; }
+    }
+
+    .form-container {
+      border-radius: var(--radius);
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      background: rgba(255, 255, 255, 0.75);
+      overflow: hidden;
+    }
+
+    .form-toggle {
+      cursor: pointer;
+      padding: 14px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.60);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      transition: background .2s ease;
+    }
+
+    .form-toggle:hover { background: rgba(255, 255, 255, 0.80); }
+
+    .form-toggle h3 { margin: 0; font-size: .98rem; font-weight: 1000; }
+
+    .form-toggle i { transition: transform .25s ease; opacity: .85; }
+
+    .form-toggle.active i { transform: rotate(180deg); }
+
+    form {
+      display: none;
+      padding: 14px;
+      gap: 12px;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: start;
+    }
+
+    form.active {
+      display: grid;
+      animation: expandDown .25s ease both;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      grid-column: span 12;
+    }
+
+    label {
+      font-size: .85rem;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--text);
+      outline: none;
+      transition: box-shadow .2s ease, border-color .2s ease, background .2s ease, transform .1s ease;
+    }
+
+    input::placeholder { color: rgba(15, 23, 42, 0.40); }
+
+    input:focus {
+      border-color: rgba(99, 102, 241, 0.65);
+      box-shadow: var(--ring);
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 1);
+    }
+
+    form button[type="submit"] {
+      grid-column: span 12;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 0;
+      color: white;
+      font-weight: 1000;
+      cursor: pointer;
+      transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+    }
+
+    #laundryForm button[type="submit"] {
+      background: linear-gradient(135deg, #3b82f6, #22c55e, #14b8a6);
+    }
+
+    #pengeluaranForm button[type="submit"] {
+      background: linear-gradient(135deg, #f59e0b, #fb7185, #a855f7);
+    }
+
+    form button[type="submit"]:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
+    }
+
+    form button[type="submit"]:active { transform: translateY(0); }
+
+    /* grid responsif (sesuai struktur input kamu) */
+    @media (min-width: 640px) {
+      #laundryForm .form-group:nth-child(2) { grid-column: span 6; }
+      #laundryForm .form-group:nth-child(3) { grid-column: span 6; }
+      #laundryForm .form-group:nth-child(4) { grid-column: span 4; }
+      #laundryForm .form-group:nth-child(5) { grid-column: span 4; }
+      #laundryForm .form-group:nth-child(6) { grid-column: span 4; }
+
+      #pengeluaranForm .form-group:nth-child(2) { grid-column: span 12; }
+      #pengeluaranForm .form-group:nth-child(3) { grid-column: span 6; }
+      #pengeluaranForm .form-group:nth-child(4) { grid-column: span 6; }
+    }
+
+    /* ===== Tables ===== */
+    .table-wrap {
+      padding: 10px 14px 16px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 860px;
+      background: rgba(255, 255, 255, 0.60);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: .82rem;
+      letter-spacing: .25px;
+      text-transform: uppercase;
+      color: rgba(15, 23, 42, 0.70);
+      padding: 12px 12px;
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      position: sticky;
+      top: 78px;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    tbody td {
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      color: rgba(15, 23, 42, 0.86);
+      font-size: .92rem;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    tbody tr {
+      animation: floatIn .35s ease both;
+    }
+
+    tbody tr:hover td {
+      background: rgba(99, 102, 241, 0.06);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .action-buttons button {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      margin-top: 0;
+      padding: 0;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .action-buttons button:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 1);
+      border-color: rgba(15, 23, 42, 0.16);
+      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.10);
+    }
+
+    .action-buttons .edit i { color: #f59e0b; }
+    .action-buttons .delete i { color: #f43f5e; }
+    .action-buttons .whatsapp i { color: #22c55e; }
+
+    @media (max-width: 520px) {
+      .title-wrap p { display: none; }
+      .btn span { display: none; }
+      table { min-width: 760px; }
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <h1>Dashboard Keuangan Laundry 🧺</h1>
-        <p>Kelola pemasukan dan pengeluaran bisnismu dengan lebih mudah.</p>
-    </header>
-
-    <div class="container">
-        <div class="cards">
-            <div class="card" id="pendapatanHarian">
-                <i class="fas fa-sun card-icon"></i>
-                <h4>Pendapatan Harian</h4>
-                <p>Rp 0</p>
-            </div>
-            <div class="card" id="pendapatanBulanan">
-                <i class="fas fa-calendar-week card-icon"></i>
-                <h4>Pendapatan Bulanan</h4>
-                <p>Rp 0</p>
-            </div>
-            <div class="card" id="penghasilanBersih">
-                <i class="fas fa-chart-line card-icon"></i>
-                <h4>Penghasilan Bersih Bulanan</h4>
-                <p>Rp 0</p>
-            </div>
-            <div class="card" id="pendapatanTahunan">
-                <i class="fas fa-calendar-alt card-icon"></i>
-                <h4>Pendapatan Tahunan</h4>
-                <p>Rp 0</p>
-            </div>
-            <div class="card" id="pengeluaranBulanan">
-                <i class="fas fa-hand-holding-usd card-icon"></i>
-                <h4>Pengeluaran Bulanan</h4>
-                <p>Rp 0</p>
-            </div>
-            <div class="card" id="pendapatanTotal">
-                <i class="fas fa-money-bill-wave card-icon"></i>
-                <h4>Pendapatan Total</h4>
-                <p>Rp 0</p>
-            </div>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <i class="fas fa-basket-shopping"></i>
         </div>
-
-        <div class="form-section">
-            <div class="form-container-wrapper">
-                <div class="form-container">
-                    <div class="form-toggle" id="toggleLaundryForm">
-                        <h3>📝 Input Transaksi Laundry</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <form id="laundryForm">
-                        <input type="hidden" id="editIndexLaundry">
-                        <div class="form-group">
-                            <label for="nama">Nama Pelanggan</label>
-                            <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor">Nomor WA</label>
-                            <input type="text" id="nomor" placeholder="Contoh: 6281234567890" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="berat">Berat (Kg)</label>
-                            <input type="text" id="berat" placeholder="Contoh: 5,5 atau 5.5" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="harga">Harga per Kg (Rp)</label>
-                            <input type="number" id="harga" placeholder="Contoh: 7000" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggal">Tanggal Transaksi</label>
-                            <input type="date" id="tanggal" required>
-                        </div>
-                        <button type="submit">Simpan Transaksi</button>
-                    </form>
-                </div>
-
-                <div class="form-container">
-                    <div class="form-toggle" id="togglePengeluaranForm">
-                        <h3>💰 Input Pengeluaran</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <form id="pengeluaranForm">
-                        <input type="hidden" id="editIndexPengeluaran">
-                        <div class="form-group">
-                            <label for="ketPengeluaran">Keterangan</label>
-                            <input type="text" id="ketPengeluaran" placeholder="Contoh: Beli sabun cuci" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlahPengeluaran">Total Pengeluaran (Rp)</label>
-                            <input type="number" id="jumlahPengeluaran" placeholder="Contoh: 50000" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggalPengeluaran">Tanggal Pengeluaran</label>
-                            <input type="date" id="tanggalPengeluaran" required>
-                        </div>
-                        <button type="submit">Simpan Pengeluaran</button>
-                    </form>
-                </div>
-            </div>
+        <div class="title-wrap">
+          <h1>Dashboard Keuangan Laundry</h1>
+          <p>Kelola pemasukan & pengeluaran dengan cepat dan rapi.</p>
         </div>
+      </div>
 
-        <button id="downloadBtn">Download Data (.csv) <i class="fas fa-download"></i></button>
+      <div class="top-actions">
+        <button id="downloadBtn" class="btn btn-primary">
+          <i class="fas fa-download"></i>
+          <span>Download CSV</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <div class="table-section">
-            <h3>📊 Data Transaksi Laundry</h3>
-            <table id="laundryTable">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>No. WA</th>
-                        <th>Berat (Kg)</th>
-                        <th>Harga (Rp)</th>
-                        <th>Total</th>
-                        <th>Tanggal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+  <div class="container">
+    <div class="cards">
+      <div class="card" id="pendapatanHarian">
+        <div class="card-top">
+          <div>
+            <h4>Pendapatan Harian</h4>
+            <p>Rp 0</p>
+          </div>
+          <div class="card-icon"><i class="fas fa-sun"></i></div>
         </div>
+      </div>
 
-        <div class="table-section">
-            <h3>📊 Data Pengeluaran</h3>
-            <table id="pengeluaranTable">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Keterangan</th>
-                        <th>Total (Rp)</th>
-                        <th>Tanggal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+      <div class="card" id="pendapatanBulanan">
+        <div class="card-top">
+          <div>
+            <h4>Pendapatan Bulanan</h4>
+            <p>Rp 0</p>
+          </div>
+          <div class="card-icon"><i class="fas fa-calendar-week"></i></div>
         </div>
+      </div>
+
+      <div class="card" id="penghasilanBersih">
+        <div class="card-top">
+          <div>
+            <h4>Penghasilan Bersih Bulanan</h4>
+            <p>Rp 0</p>
+          </div>
+          <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+        </div>
+      </div>
+
+      <div class="card" id="pendapatanTahunan">
+        <div class="card-top">
+          <div>
+            <h4>Pendapatan Tahunan</h4>
+            <p>Rp 0</p>
+          </div>
+          <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+        </div>
+      </div>
+
+      <div class="card" id="pengeluaranBulanan">
+        <div class="card-top">
+          <div>
+            <h4>Pengeluaran Bulanan</h4>
+            <p>Rp 0</p>
+          </div>
+          <div class="card-icon"><i class="fas fa-hand-holding-usd"></i></div>
+        </div>
+      </div>
+
+      <div class="card" id="pendapatanTotal">
+        <div class="card-top">
+          <div>
+            <h4>Pendapatan Total</h4>
+            <p>Rp 0</p>
+          </div>
+          <div class="card-icon"><i class="fas fa-money-bill-wave"></i></div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        let laundryData = JSON.parse(localStorage.getItem("laundryData")) || [];
-        let pengeluaranData = JSON.parse(localStorage.getItem("pengeluaranData")) || [];
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <h3>Input Data</h3>
+          <p class="hint">Klik judul untuk buka/tutup form.</p>
+        </div>
+      </div>
 
-        const laundryForm = document.getElementById("laundryForm");
-        const pengeluaranForm = document.getElementById("pengeluaranForm");
-        const laundryBody = document.querySelector("#laundryTable tbody");
-        const pengeluaranBody = document.querySelector("#pengeluaranTable tbody");
-        const downloadBtn = document.getElementById("downloadBtn");
+      <div class="form-container-wrapper">
+        <div class="form-container">
+          <div class="form-toggle" id="toggleLaundryForm">
+            <h3>📝 Input Transaksi Laundry</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
 
-        const toggleLaundryForm = document.getElementById("toggleLaundryForm");
-        const togglePengeluaranForm = document.getElementById("togglePengeluaranForm");
+          <form id="laundryForm">
+            <input type="hidden" id="editIndexLaundry">
+            <div class="form-group">
+              <label for="nama">Nama Pelanggan</label>
+              <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
+            </div>
+            <div class="form-group">
+              <label for="nomor">Nomor WA</label>
+              <input type="text" id="nomor" placeholder="Contoh: 6281234567890" required>
+            </div>
+            <div class="form-group">
+              <label for="berat">Berat (Kg)</label>
+              <input type="text" id="berat" placeholder="Contoh: 5,5 atau 5.5" required>
+            </div>
+            <div class="form-group">
+              <label for="harga">Harga per Kg (Rp)</label>
+              <input type="number" id="harga" placeholder="Contoh: 7000" required>
+            </div>
+            <div class="form-group">
+              <label for="tanggal">Tanggal Transaksi</label>
+              <input type="date" id="tanggal" required>
+            </div>
+            <button type="submit">Simpan Transaksi</button>
+          </form>
+        </div>
 
-        function formatRupiah(angka) {
-            return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        <div class="form-container">
+          <div class="form-toggle" id="togglePengeluaranForm">
+            <h3>💰 Input Pengeluaran</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+
+          <form id="pengeluaranForm">
+            <input type="hidden" id="editIndexPengeluaran">
+            <div class="form-group">
+              <label for="ketPengeluaran">Keterangan</label>
+              <input type="text" id="ketPengeluaran" placeholder="Contoh: Beli sabun cuci" required>
+            </div>
+            <div class="form-group">
+              <label for="jumlahPengeluaran">Total Pengeluaran (Rp)</label>
+              <input type="number" id="jumlahPengeluaran" placeholder="Contoh: 50000" required>
+            </div>
+            <div class="form-group">
+              <label for="tanggalPengeluaran">Tanggal Pengeluaran</label>
+              <input type="date" id="tanggalPengeluaran" required>
+            </div>
+            <button type="submit">Simpan Pengeluaran</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:16px;">
+      <div class="section-header">
+        <div>
+          <h3>📊 Data Transaksi Laundry</h3>
+          <p class="hint">Edit / hapus / WhatsApp langsung dari tabel.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="laundryTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>No. WA</th>
+              <th>Berat (Kg)</th>
+              <th>Harga (Rp)</th>
+              <th>Total</th>
+              <th>Tanggal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:16px;">
+      <div class="section-header">
+        <div>
+          <h3>📊 Data Pengeluaran</h3>
+          <p class="hint">Catatan biaya operasional bulanan.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="pengeluaranTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Keterangan</th>
+              <th>Total (Rp)</th>
+              <th>Tanggal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let laundryData = JSON.parse(localStorage.getItem("laundryData")) || [];
+    let pengeluaranData = JSON.parse(localStorage.getItem("pengeluaranData")) || [];
+
+    const laundryForm = document.getElementById("laundryForm");
+    const pengeluaranForm = document.getElementById("pengeluaranForm");
+    const laundryBody = document.querySelector("#laundryTable tbody");
+    const pengeluaranBody = document.querySelector("#pengeluaranTable tbody");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    const toggleLaundryForm = document.getElementById("toggleLaundryForm");
+    const togglePengeluaranForm = document.getElementById("togglePengeluaranForm");
+
+    function formatRupiah(angka) {
+      return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function renderTable() {
+      laundryBody.innerHTML = "";
+      let totalPendapatan = 0;
+      let today = new Date().toISOString().split("T")[0];
+      let bulan = new Date().getMonth();
+      let tahun = new Date().getFullYear();
+      let pendapatanHarian = 0, pendapatanBulanan = 0, pendapatanTahunan = 0;
+      let totalPengeluaranBulanan = 0;
+
+      laundryData.forEach((data, index) => {
+        const berat = parseFloat(data.berat.toString().replace(',', '.'));
+        const harga = parseFloat(data.harga);
+        const total = berat * harga;
+
+        totalPendapatan += total;
+        let tanggal = new Date(data.tanggal);
+
+        if (data.tanggal === today) pendapatanHarian += total;
+        if (tanggal.getMonth() === bulan && tanggal.getFullYear() === tahun) pendapatanBulanan += total;
+        if (tanggal.getFullYear() === tahun) pendapatanTahunan += total;
+
+        const row = `<tr>
+          <td>${index + 1}</td>
+          <td>${data.nama}</td>
+          <td>${data.nomor}</td>
+          <td>${data.berat}</td>
+          <td>${formatRupiah(data.harga)}</td>
+          <td>${formatRupiah(total)}</td>
+          <td>${data.tanggal}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="edit" data-type="laundry" data-index="${index}" title="Edit"><i class="fas fa-edit"></i></button>
+              <button class="delete" data-type="laundry" data-index="${index}" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+              <button class="whatsapp" onclick="sendWA('${data.nomor}','${data.nama}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+            </div>
+          </td>
+        </tr>`;
+        laundryBody.innerHTML += row;
+      });
+
+      pengeluaranBody.innerHTML = "";
+      pengeluaranData.forEach((data, index) => {
+        let tanggal = new Date(data.tanggal);
+        if (tanggal.getMonth() === bulan && tanggal.getFullYear() === tahun) {
+          totalPengeluaranBulanan += data.jumlah;
         }
+        const row = `<tr>
+          <td>${index + 1}</td>
+          <td>${data.keterangan}</td>
+          <td>${formatRupiah(data.jumlah)}</td>
+          <td>${data.tanggal}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="edit" data-type="pengeluaran" data-index="${index}" title="Edit"><i class="fas fa-edit"></i></button>
+              <button class="delete" data-type="pengeluaran" data-index="${index}" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+            </div>
+          </td>
+        </tr>`;
+        pengeluaranBody.innerHTML += row;
+      });
 
-        function renderTable() {
-            // Render Laundry
-            laundryBody.innerHTML = "";
-            let totalPendapatan = 0;
-            let today = new Date().toISOString().split("T")[0];
-            let bulan = new Date().getMonth();
-            let tahun = new Date().getFullYear();
-            let pendapatanHarian = 0,
-                pendapatanBulanan = 0,
-                pendapatanTahunan = 0;
-            let totalPengeluaranBulanan = 0;
+      const penghasilanBersih = pendapatanBulanan - totalPengeluaranBulanan;
 
-            laundryData.forEach((data, index) => {
-                // Perbaikan: Menggunakan parseFloat() dan mengganti koma dengan titik
-                const berat = parseFloat(data.berat.toString().replace(',', '.'));
-                const harga = parseFloat(data.harga);
-                const total = berat * harga;
+      document.querySelector("#pendapatanHarian p").innerText = formatRupiah(pendapatanHarian);
+      document.querySelector("#pendapatanBulanan p").innerText = formatRupiah(pendapatanBulanan);
+      document.querySelector("#pendapatanTahunan p").innerText = formatRupiah(pendapatanTahunan);
+      document.querySelector("#pendapatanTotal p").innerText = formatRupiah(totalPendapatan);
+      document.querySelector("#pengeluaranBulanan p").innerText = formatRupiah(totalPengeluaranBulanan);
+      document.querySelector("#penghasilanBersih p").innerText = formatRupiah(penghasilanBersih);
 
-                totalPendapatan += total;
-                let tanggal = new Date(data.tanggal);
+      localStorage.setItem("laundryData", JSON.stringify(laundryData));
+      localStorage.setItem("pengeluaranData", JSON.stringify(pengeluaranData));
+    }
 
-                if (data.tanggal === today) pendapatanHarian += total;
-                if (tanggal.getMonth() === bulan && tanggal.getFullYear() === tahun) pendapatanBulanan += total;
-                if (tanggal.getFullYear() === tahun) pendapatanTahunan += total;
+    laundryForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nama = document.getElementById("nama").value;
+      const nomor = document.getElementById("nomor").value;
+      const berat = document.getElementById("berat").value.replace(',', '.');
+      const harga = parseInt(document.getElementById("harga").value);
+      const tanggal = document.getElementById("tanggal").value;
+      const editIndex = document.getElementById("editIndexLaundry").value;
 
-                const row = `<tr>
-            <td>${index + 1}</td>
-            <td>${data.nama}</td>
-            <td>${data.nomor}</td>
-            <td>${data.berat}</td>
-            <td>${formatRupiah(data.harga)}</td>
-            <td>${formatRupiah(total)}</td>
-            <td>${data.tanggal}</td>
-            <td>
-              <div class="action-buttons">
-                <button class="edit" data-type="laundry" data-index="${index}"><i class="fas fa-edit"></i></button>
-                <button class="delete" data-type="laundry" data-index="${index}"><i class="fas fa-trash-alt"></i></button>
-                <button class="whatsapp" onclick="sendWA('${data.nomor}','${data.nama}')"><i class="fab fa-whatsapp"></i></button>
-              </div>
-            </td>
-          </tr>`;
-                laundryBody.innerHTML += row;
-            });
+      const newData = { nama, nomor, berat, harga, tanggal };
 
-            // Render Pengeluaran
-            pengeluaranBody.innerHTML = "";
-            pengeluaranData.forEach((data, index) => {
-                let tanggal = new Date(data.tanggal);
-                if (tanggal.getMonth() === bulan && tanggal.getFullYear() === tahun) {
-                    totalPengeluaranBulanan += data.jumlah;
-                }
-                const row = `<tr>
-            <td>${index + 1}</td>
-            <td>${data.keterangan}</td>
-            <td>${formatRupiah(data.jumlah)}</td>
-            <td>${data.tanggal}</td>
-            <td>
-                <div class="action-buttons">
-                    <button class="edit" data-type="pengeluaran" data-index="${index}"><i class="fas fa-edit"></i></button>
-                    <button class="delete" data-type="pengeluaran" data-index="${index}"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </td>
-          </tr>`;
-                pengeluaranBody.innerHTML += row;
-            });
+      if (editIndex === "") laundryData.push(newData);
+      else {
+        laundryData[editIndex] = newData;
+        document.getElementById("editIndexLaundry").value = "";
+      }
 
-            // Calculate net income
-            const penghasilanBersih = pendapatanBulanan - totalPengeluaranBulanan;
+      laundryForm.reset();
+      renderTable();
+    });
 
-            // Update Cards
-            document.querySelector("#pendapatanHarian p").innerText = formatRupiah(pendapatanHarian);
-            document.querySelector("#pendapatanBulanan p").innerText = formatRupiah(pendapatanBulanan);
-            document.querySelector("#pendapatanTahunan p").innerText = formatRupiah(pendapatanTahunan);
-            document.querySelector("#pendapatanTotal p").innerText = formatRupiah(totalPendapatan);
-            document.querySelector("#pengeluaranBulanan p").innerText = formatRupiah(totalPengeluaranBulanan);
-            document.querySelector("#penghasilanBersih p").innerText = formatRupiah(penghasilanBersih);
+    pengeluaranForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const keterangan = document.getElementById("ketPengeluaran").value;
+      const jumlah = parseInt(document.getElementById("jumlahPengeluaran").value);
+      const tanggal = document.getElementById("tanggalPengeluaran").value;
+      const editIndex = document.getElementById("editIndexPengeluaran").value;
 
-            localStorage.setItem("laundryData", JSON.stringify(laundryData));
-            localStorage.setItem("pengeluaranData", JSON.stringify(pengeluaranData));
-        }
+      const newData = { keterangan, jumlah, tanggal };
 
-        laundryForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const nama = document.getElementById("nama").value;
-            const nomor = document.getElementById("nomor").value;
-            // Perbaikan: Mengambil nilai dari input teks dan memprosesnya
-            const berat = document.getElementById("berat").value.replace(',', '.');
-            const harga = parseInt(document.getElementById("harga").value);
-            const tanggal = document.getElementById("tanggal").value;
-            const editIndex = document.getElementById("editIndexLaundry").value;
+      if (editIndex === "") pengeluaranData.push(newData);
+      else {
+        pengeluaranData[editIndex] = newData;
+        document.getElementById("editIndexPengeluaran").value = "";
+      }
 
-            const newData = {
-                nama,
-                nomor,
-                berat, // Simpan sebagai string agar format koma/titik tetap
-                harga,
-                tanggal
-            };
+      pengeluaranForm.reset();
+      renderTable();
+    });
 
-            if (editIndex === "") {
-                laundryData.push(newData);
-            } else {
-                laundryData[editIndex] = newData;
-                document.getElementById("editIndexLaundry").value = "";
-            }
+    function editLaundry(index) {
+      const data = laundryData[index];
+      document.getElementById("nama").value = data.nama;
+      document.getElementById("nomor").value = data.nomor;
+      document.getElementById("berat").value = data.berat;
+      document.getElementById("harga").value = data.harga;
+      document.getElementById("tanggal").value = data.tanggal;
+      document.getElementById("editIndexLaundry").value = index;
 
-            laundryForm.reset();
-            renderTable();
-        });
+      laundryForm.classList.add('active');
+      toggleLaundryForm.classList.add('active');
+      window.scrollTo({ top: toggleLaundryForm.offsetTop - 90, behavior: 'smooth' });
+    }
 
-        pengeluaranForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const keterangan = document.getElementById("ketPengeluaran").value;
-            const jumlah = parseInt(document.getElementById("jumlahPengeluaran").value);
-            const tanggal = document.getElementById("tanggalPengeluaran").value;
-            const editIndex = document.getElementById("editIndexPengeluaran").value;
-
-            const newData = {
-                keterangan,
-                jumlah,
-                tanggal
-            };
-
-            if (editIndex === "") {
-                pengeluaranData.push(newData);
-            } else {
-                pengeluaranData[editIndex] = newData;
-                document.getElementById("editIndexPengeluaran").value = "";
-            }
-
-            pengeluaranForm.reset();
-            renderTable();
-        });
-
-        function editLaundry(index) {
-            const data = laundryData[index];
-            document.getElementById("nama").value = data.nama;
-            document.getElementById("nomor").value = data.nomor;
-            document.getElementById("berat").value = data.berat;
-            document.getElementById("harga").value = data.harga;
-            document.getElementById("tanggal").value = data.tanggal;
-            document.getElementById("editIndexLaundry").value = index;
-
-            laundryForm.classList.add('active');
-            toggleLaundryForm.classList.add('active');
-            window.scrollTo({
-                top: toggleLaundryForm.offsetTop,
-                behavior: 'smooth'
-            });
-        }
-
-        function deleteLaundry(index) {
-            if (confirm("Yakin ingin menghapus data ini?")) {
-                laundryData.splice(index, 1);
-                renderTable();
-            }
-        }
-
-        function editPengeluaran(index) {
-            const data = pengeluaranData[index];
-            document.getElementById("ketPengeluaran").value = data.keterangan;
-            document.getElementById("jumlahPengeluaran").value = data.jumlah;
-            document.getElementById("tanggalPengeluaran").value = data.tanggal;
-            document.getElementById("editIndexPengeluaran").value = index;
-
-            pengeluaranForm.classList.add('active');
-            togglePengeluaranForm.classList.add('active');
-            window.scrollTo({
-                top: togglePengeluaranForm.offsetTop,
-                behavior: 'smooth'
-            });
-        }
-
-        function deletePengeluaran(index) {
-            if (confirm("Yakin ingin menghapus data ini?")) {
-                pengeluaranData.splice(index, 1);
-                renderTable();
-            }
-        }
-
-        function sendWA(nomor, nama) {
-            const pesan = `Halo ${nama}, cucian Anda sudah selesai, cucian anda ingin kami antar atau diambil sendiri?. Mohon konfirmasinya, dan Terima kasih telah menggunakan jasa kami.`;
-            window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`, "_blank");
-        }
-
-        downloadBtn.addEventListener("click", () => {
-            let csv = "No,Nama,No WA,Berat (Kg),Harga (Rp),Total,Tanggal\n";
-            laundryData.forEach((d, i) => {
-                // Perbaikan: Menggunakan parseFloat() untuk perhitungan CSV
-                const berat = parseFloat(d.berat.toString().replace(',', '.'));
-                const total = berat * d.harga;
-                csv += `${i + 1},${d.nama},${d.nomor},${d.berat},${d.harga},${total},${d.tanggal}\n`;
-            });
-
-            csv += "\nData Pengeluaran\nNo,Keterangan,Total,Tanggal\n";
-            pengeluaranData.forEach((d, i) => {
-                csv += `${i + 1},${d.keterangan},${d.jumlah},${d.tanggal}\n`;
-            });
-
-            const blob = new Blob([csv], {
-                type: "text/csv;charset=utf-8;"
-            });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "data_laundry.csv";
-            link.click();
-        });
-
-        document.addEventListener('click', function(event) {
-            const target = event.target.closest('button');
-            if (target && target.dataset.type === 'laundry') {
-                const index = target.dataset.index;
-                if (target.classList.contains('edit')) {
-                    editLaundry(index);
-                } else if (target.classList.contains('delete')) {
-                    deleteLaundry(index);
-                }
-            } else if (target && target.dataset.type === 'pengeluaran') {
-                const index = target.dataset.index;
-                if (target.classList.contains('edit')) {
-                    editPengeluaran(index);
-                } else if (target.classList.contains('delete')) {
-                    deletePengeluaran(index);
-                }
-            }
-        });
-
-        toggleLaundryForm.addEventListener('click', () => {
-            laundryForm.classList.toggle('active');
-            toggleLaundryForm.classList.toggle('active');
-        });
-
-        togglePengeluaranForm.addEventListener('click', () => {
-            pengeluaranForm.classList.toggle('active');
-            togglePengeluaranForm.classList.toggle('active');
-        });
-
+    function deleteLaundry(index) {
+      if (confirm("Yakin ingin menghapus data ini?")) {
+        laundryData.splice(index, 1);
         renderTable();
-    </script>
+      }
+    }
+
+    function editPengeluaran(index) {
+      const data = pengeluaranData[index];
+      document.getElementById("ketPengeluaran").value = data.keterangan;
+      document.getElementById("jumlahPengeluaran").value = data.jumlah;
+      document.getElementById("tanggalPengeluaran").value = data.tanggal;
+      document.getElementById("editIndexPengeluaran").value = index;
+
+      pengeluaranForm.classList.add('active');
+      togglePengeluaranForm.classList.add('active');
+      window.scrollTo({ top: togglePengeluaranForm.offsetTop - 90, behavior: 'smooth' });
+    }
+
+    function deletePengeluaran(index) {
+      if (confirm("Yakin ingin menghapus data ini?")) {
+        pengeluaranData.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    function sendWA(nomor, nama) {
+      const pesan = `Halo ${nama}, cucian Anda sudah selesai, cucian anda ingin kami antar atau diambil sendiri?. Mohon konfirmasinya, dan Terima kasih telah menggunakan jasa kami.`;
+      window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`, "_blank");
+    }
+
+    downloadBtn.addEventListener("click", () => {
+      let csv = "No,Nama,No WA,Berat (Kg),Harga (Rp),Total,Tanggal\n";
+      laundryData.forEach((d, i) => {
+        const berat = parseFloat(d.berat.toString().replace(',', '.'));
+        const total = berat * d.harga;
+        csv += `${i + 1},${d.nama},${d.nomor},${d.berat},${d.harga},${total},${d.tanggal}\n`;
+      });
+
+      csv += "\nData Pengeluaran\nNo,Keterangan,Total,Tanggal\n";
+      pengeluaranData.forEach((d, i) => {
+        csv += `${i + 1},${d.keterangan},${d.jumlah},${d.tanggal}\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "data_laundry.csv";
+      link.click();
+    });
+
+    document.addEventListener('click', function (event) {
+      const target = event.target.closest('button');
+      if (target && target.dataset.type === 'laundry') {
+        const index = target.dataset.index;
+        if (target.classList.contains('edit')) editLaundry(index);
+        else if (target.classList.contains('delete')) deleteLaundry(index);
+      } else if (target && target.dataset.type === 'pengeluaran') {
+        const index = target.dataset.index;
+        if (target.classList.contains('edit')) editPengeluaran(index);
+        else if (target.classList.contains('delete')) deletePengeluaran(index);
+      }
+    });
+
+    toggleLaundryForm.addEventListener('click', () => {
+      laundryForm.classList.toggle('active');
+      toggleLaundryForm.classList.toggle('active');
+    });
+
+    togglePengeluaranForm.addEventListener('click', () => {
+      pengeluaranForm.classList.toggle('active');
+      togglePengeluaranForm.classList.toggle('active');
+    });
+
+    renderTable();
+  </script>
 </body>
 
 </html>
