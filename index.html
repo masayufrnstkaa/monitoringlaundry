@@ -6,76 +6,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Keuangan Laundry</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
   <style>
     :root {
-      --bg: #f6f8ff;
+      color-scheme: light;
+
+      --bg: #f5f7ff;
       --bg2: #eef3ff;
-      --card: rgba(255, 255, 255, 0.82);
-      --card2: rgba(255, 255, 255, 0.92);
-      --stroke: rgba(15, 23, 42, 0.10);
+
+      --card: rgba(255, 255, 255, .92);
+      --card2: rgba(255, 255, 255, .98);
+      --stroke: rgba(15, 23, 42, .12);
 
       --text: #0f172a;
-      --muted: rgba(15, 23, 42, 0.65);
+      --muted: rgba(15, 23, 42, .62);
 
       --radius: 18px;
       --radius2: 14px;
 
-      --shadow: 0 16px 40px rgba(15, 23, 42, 0.10);
-      --shadow2: 0 10px 26px rgba(15, 23, 42, 0.08);
+      --shadow: 0 18px 50px rgba(15, 23, 42, .10);
+      --shadow2: 0 10px 24px rgba(15, 23, 42, .08);
 
-      --ring: 0 0 0 4px rgba(99, 102, 241, 0.18);
-      --accent: #6366f1;
+      --ring: 0 0 0 4px rgba(99, 102, 241, .16);
+
+      --blue: #3b82f6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --teal: #14b8a6;
+      --purple: #a855f7;
     }
 
-    /* ===== Animations ===== */
     @keyframes floatIn {
-      from { opacity: 0; transform: translateY(14px) scale(.985); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
 
-    @keyframes shimmer {
-      0%   { transform: translateX(-130%) rotate(12deg); opacity: 0; }
-      25%  { opacity: .35; }
-      100% { transform: translateX(130%) rotate(12deg); opacity: 0; }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes expandDown {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
       background:
-        radial-gradient(1100px 520px at 15% -10%, rgba(99, 102, 241, .22), transparent 58%),
-        radial-gradient(900px 520px at 90% 0%, rgba(34, 197, 94, .18), transparent 60%),
-        radial-gradient(900px 520px at 60% 110%, rgba(244, 63, 94, .12), transparent 60%),
+        radial-gradient(1100px 520px at 15% -10%, rgba(99, 102, 241, .20), transparent 58%),
+        radial-gradient(900px 520px at 90% 0%, rgba(34, 197, 94, .16), transparent 60%),
+        radial-gradient(900px 520px at 60% 110%, rgba(244, 63, 94, .10), transparent 60%),
         linear-gradient(180deg, var(--bg), var(--bg2));
+      min-height: 100vh;
     }
 
-    /* ===== Sticky Header ===== */
+    input,
+    button {
+      font-family: inherit;
+    }
+
     header {
       position: sticky;
       top: 0;
       z-index: 50;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      background: rgba(246, 248, 255, 0.70);
-      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      background: rgba(245, 247, 255, .78);
+      border-bottom: 1px solid rgba(15, 23, 42, .08);
     }
 
     .topbar {
@@ -90,8 +114,8 @@
 
     .brand {
       display: flex;
-      gap: 12px;
       align-items: center;
+      gap: 12px;
       min-width: 0;
     }
 
@@ -99,24 +123,22 @@
       width: 44px;
       height: 44px;
       border-radius: 16px;
-      border: 1px solid rgba(15, 23, 42, 0.10);
-      box-shadow: var(--shadow2);
       display: grid;
       place-items: center;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(255, 255, 255, .8), transparent 60%),
-        linear-gradient(135deg, #22c55e, #3b82f6, #a855f7);
+      border: 1px solid rgba(15, 23, 42, .10);
+      box-shadow: var(--shadow2);
+      background: linear-gradient(135deg, #22c55e, #3b82f6, #a855f7);
+      color: white;
     }
 
-    .logo i { color: rgba(255, 255, 255, 0.95); }
-
-    .title-wrap { min-width: 0; }
+    .title-wrap {
+      min-width: 0;
+    }
 
     .title-wrap h1 {
       margin: 0;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 900;
-      letter-spacing: .2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -124,130 +146,93 @@
 
     .title-wrap p {
       margin: 2px 0 0;
-      font-size: .88rem;
       color: var(--muted);
+      font-size: .88rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .top-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
     .btn {
-      border: 1px solid rgba(15, 23, 42, 0.12);
-      background: rgba(255, 255, 255, 0.70);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 900;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(15, 23, 42, .12);
+      background: rgba(255, 255, 255, .80);
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, .06);
+      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+      color: var(--text);
     }
 
     .btn:hover {
       transform: translateY(-1px);
-      background: rgba(255, 255, 255, 0.92);
-      border-color: rgba(15, 23, 42, 0.16);
-      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
+      box-shadow: 0 14px 26px rgba(15, 23, 42, .10);
     }
 
-    .btn:active { transform: translateY(0); }
-
-    /* id tetap sama untuk JS download */
-    #downloadBtn.btn-primary {
+    #downloadBtn {
       background: linear-gradient(135deg, #22c55e, #3b82f6, #a855f7);
-      border: 1px solid rgba(255, 255, 255, 0.75);
       color: white;
-      box-shadow: 0 14px 30px rgba(59, 130, 246, 0.18);
+      border: 1px solid rgba(255, 255, 255, .70);
     }
 
-    #downloadBtn.btn-primary:hover {
-      box-shadow: 0 18px 38px rgba(59, 130, 246, 0.24);
-      filter: brightness(1.03);
-    }
-
-    /* ===== Layout ===== */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 22px 16px 60px;
     }
 
-    /* ===== Cards ===== */
+    /* ===== CARDS ===== */
     .cards {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 14px;
-      margin: 18px 0;
+      margin: 18px 0 18px;
     }
 
     .card {
       grid-column: span 12;
-      padding: 16px 16px 14px;
       border-radius: var(--radius);
-      border: 1px solid rgba(15, 23, 42, 0.10);
+      border: 1px solid rgba(15, 23, 42, .10);
       background: var(--card);
       box-shadow: var(--shadow2);
+      padding: 16px;
       position: relative;
       overflow: hidden;
-      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
-      animation: floatIn .65s ease both;
+      animation: floatIn .55s ease both;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-
-    /* stagger */
-    .cards .card:nth-child(1) { animation-delay: .05s; }
-    .cards .card:nth-child(2) { animation-delay: .10s; }
-    .cards .card:nth-child(3) { animation-delay: .15s; }
-    .cards .card:nth-child(4) { animation-delay: .20s; }
-    .cards .card:nth-child(5) { animation-delay: .25s; }
-    .cards .card:nth-child(6) { animation-delay: .30s; }
 
     .card:hover {
-      transform: translateY(-3px) scale(1.01);
-      border-color: rgba(15, 23, 42, 0.16);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, .14);
+      border-color: rgba(15, 23, 42, .16);
     }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -70px;
-      background: radial-gradient(260px 160px at 15% 10%, rgba(255, 255, 255, .85), transparent 60%);
-      transform: rotate(12deg);
-      pointer-events: none;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      top: -40%;
-      left: -60%;
-      width: 60%;
-      height: 200%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
-      transform: rotate(12deg);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .card:hover::after { animation: shimmer 1.2s ease; }
 
     .card-top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       position: relative;
       z-index: 1;
+    }
+
+    .card h4 {
+      margin: 0;
+      color: rgba(15, 23, 42, .72);
+      font-size: .92rem;
+      font-weight: 900;
+    }
+
+    .card p {
+      margin: 8px 0 0;
+      font-size: 1.35rem;
+      font-weight: 1000;
+      letter-spacing: .2px;
     }
 
     .card-icon {
@@ -256,88 +241,60 @@
       border-radius: 16px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(15, 23, 42, 0.10);
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid rgba(15, 23, 42, .10);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, .08);
+      flex-shrink: 0;
     }
 
-    .card h4 {
-      margin: 0;
-      font-size: .92rem;
-      font-weight: 800;
-      color: rgba(15, 23, 42, 0.78);
-    }
+    /* warna per kartu (light) */
+    #pendapatanHarian { background: linear-gradient(135deg, rgba(59,130,246,.16), rgba(255,255,255,.92)); }
+    #pendapatanBulanan { background: linear-gradient(135deg, rgba(34,197,94,.14), rgba(255,255,255,.92)); }
+    #penghasilanBersih { background: linear-gradient(135deg, rgba(245,158,11,.14), rgba(255,255,255,.92)); }
+    #pendapatanTahunan { background: linear-gradient(135deg, rgba(168,85,247,.14), rgba(255,255,255,.92)); }
+    #pengeluaranBulanan { background: linear-gradient(135deg, rgba(244,63,94,.12), rgba(255,255,255,.92)); }
+    #pendapatanTotal { background: linear-gradient(135deg, rgba(20,184,166,.12), rgba(255,255,255,.92)); }
 
-    .card p {
-      margin: 8px 0 0;
-      font-size: 1.35rem;
-      font-weight: 1000;
-      letter-spacing: .2px;
-      position: relative;
-      z-index: 1;
-      color: #0b1220;
-    }
+    #pendapatanHarian .card-icon i { color: var(--blue); }
+    #pendapatanBulanan .card-icon i { color: var(--green); }
+    #penghasilanBersih .card-icon i { color: var(--amber); }
+    #pendapatanTahunan .card-icon i { color: var(--purple); }
+    #pengeluaranBulanan .card-icon i { color: var(--rose); }
+    #pendapatanTotal .card-icon i { color: var(--teal); }
 
-    /* === warna unik per card (light) === */
-    #pendapatanHarian { background: linear-gradient(135deg, rgba(59, 130, 246, .16), rgba(255, 255, 255, .85)); }
-    #pendapatanBulanan { background: linear-gradient(135deg, rgba(34, 197, 94, .14), rgba(255, 255, 255, .85)); }
-    #penghasilanBersih { background: linear-gradient(135deg, rgba(245, 158, 11, .14), rgba(255, 255, 255, .85)); }
-    #pendapatanTahunan { background: linear-gradient(135deg, rgba(168, 85, 247, .14), rgba(255, 255, 255, .85)); }
-    #pengeluaranBulanan { background: linear-gradient(135deg, rgba(244, 63, 94, .12), rgba(255, 255, 255, .85)); }
-    #pendapatanTotal { background: linear-gradient(135deg, rgba(20, 184, 166, .12), rgba(255, 255, 255, .85)); }
+    @media (min-width: 700px) { .card { grid-column: span 6; } }
+    @media (min-width: 1024px) { .card { grid-column: span 4; } }
 
-    /* icon accent */
-    #pendapatanHarian .card-icon i { color: #3b82f6; }
-    #pendapatanBulanan .card-icon i { color: #22c55e; }
-    #penghasilanBersih .card-icon i { color: #f59e0b; }
-    #pendapatanTahunan .card-icon i { color: #a855f7; }
-    #pengeluaranBulanan .card-icon i { color: #f43f5e; }
-    #pendapatanTotal .card-icon i { color: #14b8a6; }
-
-    @media (min-width: 700px) {
-      .card { grid-column: span 6; }
-    }
-
-    @media (min-width: 1024px) {
-      .card { grid-column: span 4; }
-    }
-
-    /* ===== Sections ===== */
+    /* ===== SECTION ===== */
     .section {
       background: var(--card2);
-      border: 1px solid rgba(15, 23, 42, 0.10);
+      border: 1px solid rgba(15, 23, 42, .10);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
-      animation: floatIn .6s ease both;
+      animation: floatIn .55s ease both;
+      margin-top: 16px;
     }
 
-    .section + .section { margin-top: 16px; }
-
     .section-header {
-      padding: 16px 16px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-      background: rgba(255, 255, 255, 0.55);
+      padding: 16px;
+      border-bottom: 1px solid rgba(15, 23, 42, .08);
+      background: rgba(255, 255, 255, .70);
     }
 
     .section-header h3 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.02rem;
       font-weight: 1000;
-      letter-spacing: .2px;
     }
 
-    .section-header .hint {
-      margin: 0;
-      font-size: .85rem;
+    .section-header p {
+      margin: 6px 0 0;
       color: var(--muted);
+      font-size: .88rem;
     }
 
-    /* ===== Forms ===== */
+    /* ===== FORMS ===== */
     .form-container-wrapper {
       display: grid;
       grid-template-columns: 1fr;
@@ -351,28 +308,35 @@
 
     .form-container {
       border-radius: var(--radius);
-      border: 1px solid rgba(15, 23, 42, 0.10);
-      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(15, 23, 42, .10);
+      background: rgba(255, 255, 255, .82);
       overflow: hidden;
     }
 
     .form-toggle {
       cursor: pointer;
-      padding: 14px 14px;
+      padding: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.60);
-      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, .78);
+      border-bottom: 1px solid rgba(15, 23, 42, .08);
       transition: background .2s ease;
     }
 
-    .form-toggle:hover { background: rgba(255, 255, 255, 0.80); }
+    .form-toggle:hover { background: rgba(255, 255, 255, .92); }
 
-    .form-toggle h3 { margin: 0; font-size: .98rem; font-weight: 1000; }
+    .form-toggle h3 {
+      margin: 0;
+      font-size: .98rem;
+      font-weight: 1000;
+    }
 
-    .form-toggle i { transition: transform .25s ease; opacity: .85; }
+    .form-toggle i {
+      transition: transform .25s ease;
+      opacity: .85;
+    }
 
     .form-toggle.active i { transform: rotate(180deg); }
 
@@ -381,19 +345,18 @@
       padding: 14px;
       gap: 12px;
       grid-template-columns: repeat(12, 1fr);
-      align-items: start;
     }
 
     form.active {
       display: grid;
-      animation: expandDown .25s ease both;
+      animation: expandDown .22s ease both;
     }
 
     .form-group {
+      grid-column: span 12;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      grid-column: span 12;
     }
 
     label {
@@ -405,35 +368,30 @@
     input[type="text"],
     input[type="number"],
     input[type="date"] {
-      width: 100%;
       padding: 12px 12px;
       border-radius: 12px;
-      border: 1px solid rgba(15, 23, 42, 0.14);
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--text);
+      border: 1px solid rgba(15, 23, 42, .14);
+      background: rgba(255, 255, 255, .98);
       outline: none;
-      transition: box-shadow .2s ease, border-color .2s ease, background .2s ease, transform .1s ease;
+      transition: box-shadow .2s ease, border-color .2s ease, transform .1s ease;
     }
 
-    input::placeholder { color: rgba(15, 23, 42, 0.40); }
-
     input:focus {
-      border-color: rgba(99, 102, 241, 0.65);
+      border-color: rgba(99, 102, 241, .65);
       box-shadow: var(--ring);
       transform: translateY(-1px);
-      background: rgba(255, 255, 255, 1);
     }
 
     form button[type="submit"] {
       grid-column: span 12;
       padding: 12px 12px;
-      border-radius: 14px;
       border: 0;
+      border-radius: 14px;
       color: white;
       font-weight: 1000;
       cursor: pointer;
       transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
-      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, .12);
     }
 
     #laundryForm button[type="submit"] {
@@ -447,72 +405,76 @@
     form button[type="submit"]:hover {
       transform: translateY(-1px);
       filter: brightness(1.03);
-      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, .16);
     }
 
-    form button[type="submit"]:active { transform: translateY(0); }
-
-    /* grid responsif (sesuai struktur input kamu) */
     @media (min-width: 640px) {
+      /* Laundry form layout sesuai urutan input hidden + 5 field */
       #laundryForm .form-group:nth-child(2) { grid-column: span 6; }
       #laundryForm .form-group:nth-child(3) { grid-column: span 6; }
       #laundryForm .form-group:nth-child(4) { grid-column: span 4; }
       #laundryForm .form-group:nth-child(5) { grid-column: span 4; }
       #laundryForm .form-group:nth-child(6) { grid-column: span 4; }
 
+      /* Pengeluaran form: hidden + 3 field */
       #pengeluaranForm .form-group:nth-child(2) { grid-column: span 12; }
       #pengeluaranForm .form-group:nth-child(3) { grid-column: span 6; }
       #pengeluaranForm .form-group:nth-child(4) { grid-column: span 6; }
     }
 
-    /* ===== Tables ===== */
+    /* ===== TABLE FIX (no overlap) ===== */
+    .table-hint {
+      margin: 0;
+      padding: 10px 16px 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    /* wrapper scroll TANPA padding (biar sticky rapi) */
     .table-wrap {
-      padding: 10px 14px 16px;
-      overflow-x: auto;
+      overflow: auto;
+      max-height: 420px;
+      position: relative;
+      padding: 0;
+    }
+
+    /* padding dipindah ke inner agar sticky header tidak “nyangkut” */
+    .table-inner {
+      padding: 12px 16px 16px;
     }
 
     table {
       width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
+      border-collapse: collapse;
       min-width: 860px;
-      background: rgba(255, 255, 255, 0.60);
-      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, .98);
+      border: 1px solid rgba(15, 23, 42, .10);
       border-radius: 14px;
       overflow: hidden;
     }
 
     thead th {
-      text-align: left;
-      font-size: .82rem;
-      letter-spacing: .25px;
-      text-transform: uppercase;
-      color: rgba(15, 23, 42, 0.70);
-      padding: 12px 12px;
-      background: rgba(255, 255, 255, 0.85);
-      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
       position: sticky;
-      top: 78px;
+      top: 0;               /* PENTING: sticky di dalam .table-wrap */
       z-index: 10;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, .98);
+      color: rgba(15, 23, 42, .72);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .25px;
+      padding: 12px;
+      border-bottom: 1px solid rgba(15, 23, 42, .10);
     }
 
     tbody td {
-      padding: 12px 12px;
-      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-      color: rgba(15, 23, 42, 0.86);
-      font-size: .92rem;
-      background: rgba(255, 255, 255, 0.72);
+      padding: 12px;
+      border-bottom: 1px solid rgba(15, 23, 42, .08);
+      color: rgba(15, 23, 42, .90);
+      background: transparent;
     }
 
-    tbody tr {
-      animation: floatIn .35s ease both;
-    }
-
-    tbody tr:hover td {
-      background: rgba(99, 102, 241, 0.06);
-    }
+    tbody tr:nth-child(even) { background: rgba(99, 102, 241, .05); }
+    tbody tr:hover { background: rgba(99, 102, 241, .10); }
 
     .action-buttons {
       display: flex;
@@ -524,26 +486,22 @@
       width: 38px;
       height: 38px;
       border-radius: 12px;
-      border: 1px solid rgba(15, 23, 42, 0.12);
-      background: rgba(255, 255, 255, 0.85);
-      color: var(--text);
+      border: 1px solid rgba(15, 23, 42, .12);
+      background: rgba(255, 255, 255, .92);
       cursor: pointer;
-      transition: transform .12s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
-      margin-top: 0;
+      transition: transform .12s ease, box-shadow .2s ease;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, .06);
       padding: 0;
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
     }
 
     .action-buttons button:hover {
       transform: translateY(-1px);
-      background: rgba(255, 255, 255, 1);
-      border-color: rgba(15, 23, 42, 0.16);
-      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.10);
+      box-shadow: 0 14px 26px rgba(15, 23, 42, .10);
     }
 
-    .action-buttons .edit i { color: #f59e0b; }
-    .action-buttons .delete i { color: #f43f5e; }
-    .action-buttons .whatsapp i { color: #22c55e; }
+    .action-buttons .edit i { color: var(--amber); }
+    .action-buttons .delete i { color: var(--rose); }
+    .action-buttons .whatsapp i { color: var(--green); }
 
     @media (max-width: 520px) {
       .title-wrap p { display: none; }
@@ -557,25 +515,22 @@
   <header>
     <div class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <i class="fas fa-basket-shopping"></i>
-        </div>
+        <div class="logo"><i class="fas fa-basket-shopping"></i></div>
         <div class="title-wrap">
           <h1>Dashboard Keuangan Laundry</h1>
           <p>Kelola pemasukan & pengeluaran dengan cepat dan rapi.</p>
         </div>
       </div>
 
-      <div class="top-actions">
-        <button id="downloadBtn" class="btn btn-primary">
-          <i class="fas fa-download"></i>
-          <span>Download CSV</span>
-        </button>
-      </div>
+      <button id="downloadBtn" class="btn">
+        <i class="fas fa-download"></i>
+        <span>Download CSV</span>
+      </button>
     </div>
   </header>
 
   <div class="container">
+
     <div class="cards">
       <div class="card" id="pendapatanHarian">
         <div class="card-top">
@@ -638,12 +593,11 @@
       </div>
     </div>
 
+    <!-- INPUT -->
     <div class="section">
       <div class="section-header">
-        <div>
-          <h3>Input Data</h3>
-          <p class="hint">Klik judul untuk buka/tutup form.</p>
-        </div>
+        <h3>Input Data</h3>
+        <p>Klik judul untuk buka/tutup form.</p>
       </div>
 
       <div class="form-container-wrapper">
@@ -655,26 +609,32 @@
 
           <form id="laundryForm">
             <input type="hidden" id="editIndexLaundry">
+
             <div class="form-group">
               <label for="nama">Nama Pelanggan</label>
               <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
             </div>
+
             <div class="form-group">
               <label for="nomor">Nomor WA</label>
               <input type="text" id="nomor" placeholder="Contoh: 6281234567890" required>
             </div>
+
             <div class="form-group">
               <label for="berat">Berat (Kg)</label>
               <input type="text" id="berat" placeholder="Contoh: 5,5 atau 5.5" required>
             </div>
+
             <div class="form-group">
               <label for="harga">Harga per Kg (Rp)</label>
               <input type="number" id="harga" placeholder="Contoh: 7000" required>
             </div>
+
             <div class="form-group">
               <label for="tanggal">Tanggal Transaksi</label>
               <input type="date" id="tanggal" required>
             </div>
+
             <button type="submit">Simpan Transaksi</button>
           </form>
         </div>
@@ -687,74 +647,85 @@
 
           <form id="pengeluaranForm">
             <input type="hidden" id="editIndexPengeluaran">
+
             <div class="form-group">
               <label for="ketPengeluaran">Keterangan</label>
               <input type="text" id="ketPengeluaran" placeholder="Contoh: Beli sabun cuci" required>
             </div>
+
             <div class="form-group">
               <label for="jumlahPengeluaran">Total Pengeluaran (Rp)</label>
               <input type="number" id="jumlahPengeluaran" placeholder="Contoh: 50000" required>
             </div>
+
             <div class="form-group">
               <label for="tanggalPengeluaran">Tanggal Pengeluaran</label>
               <input type="date" id="tanggalPengeluaran" required>
             </div>
+
             <button type="submit">Simpan Pengeluaran</button>
           </form>
         </div>
       </div>
     </div>
 
-    <div class="section" style="margin-top:16px;">
+    <!-- TABLE LAUNDRY -->
+    <div class="section">
       <div class="section-header">
-        <div>
-          <h3>📊 Data Transaksi Laundry</h3>
-          <p class="hint">Edit / hapus / WhatsApp langsung dari tabel.</p>
-        </div>
+        <h3>📊 Data Transaksi Laundry</h3>
+        <p>Edit / hapus / WhatsApp langsung dari tabel.</p>
       </div>
 
+      <p class="table-hint">Tips: geser tabel ke kanan/kiri untuk melihat semua kolom (khusus HP).</p>
+
       <div class="table-wrap">
-        <table id="laundryTable">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>No. WA</th>
-              <th>Berat (Kg)</th>
-              <th>Harga (Rp)</th>
-              <th>Total</th>
-              <th>Tanggal</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-inner">
+          <table id="laundryTable">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>No. WA</th>
+                <th>Berat (Kg)</th>
+                <th>Harga (Rp)</th>
+                <th>Total</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <div class="section" style="margin-top:16px;">
+    <!-- TABLE PENGELUARAN -->
+    <div class="section">
       <div class="section-header">
-        <div>
-          <h3>📊 Data Pengeluaran</h3>
-          <p class="hint">Catatan biaya operasional bulanan.</p>
-        </div>
+        <h3>📊 Data Pengeluaran</h3>
+        <p>Catatan biaya operasional.</p>
       </div>
 
+      <p class="table-hint">Tips: geser tabel ke kanan/kiri untuk melihat semua kolom (khusus HP).</p>
+
       <div class="table-wrap">
-        <table id="pengeluaranTable">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Keterangan</th>
-              <th>Total (Rp)</th>
-              <th>Tanggal</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-inner">
+          <table id="pengeluaranTable">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Keterangan</th>
+                <th>Total (Rp)</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
+
   </div>
 
   <script>
@@ -771,29 +742,36 @@
     const togglePengeluaranForm = document.getElementById("togglePengeluaranForm");
 
     function formatRupiah(angka) {
-      return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      // aman untuk angka float / int
+      const n = Number(angka) || 0;
+      return "Rp " + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function renderTable() {
+      // Render Laundry
       laundryBody.innerHTML = "";
       let totalPendapatan = 0;
-      let today = new Date().toISOString().split("T")[0];
-      let bulan = new Date().getMonth();
-      let tahun = new Date().getFullYear();
+
+      const now = new Date();
+      const today = now.toISOString().split("T")[0];
+      const bulan = now.getMonth();
+      const tahun = now.getFullYear();
+
       let pendapatanHarian = 0, pendapatanBulanan = 0, pendapatanTahunan = 0;
       let totalPengeluaranBulanan = 0;
 
       laundryData.forEach((data, index) => {
-        const berat = parseFloat(data.berat.toString().replace(',', '.'));
+        const berat = parseFloat(String(data.berat).replace(',', '.'));
         const harga = parseFloat(data.harga);
-        const total = berat * harga;
+        const total = (berat || 0) * (harga || 0);
 
         totalPendapatan += total;
-        let tanggal = new Date(data.tanggal);
+
+        const tanggalObj = new Date(data.tanggal);
 
         if (data.tanggal === today) pendapatanHarian += total;
-        if (tanggal.getMonth() === bulan && tanggal.getFullYear() === tahun) pendapatanBulanan += total;
-        if (tanggal.getFullYear() === tahun) pendapatanTahunan += total;
+        if (tanggalObj.getMonth() === bulan && tanggalObj.getFullYear() === tahun) pendapatanBulanan += total;
+        if (tanggalObj.getFullYear() === tahun) pendapatanTahunan += total;
 
         const row = `<tr>
           <td>${index + 1}</td>
@@ -805,21 +783,29 @@
           <td>${data.tanggal}</td>
           <td>
             <div class="action-buttons">
-              <button class="edit" data-type="laundry" data-index="${index}" title="Edit"><i class="fas fa-edit"></i></button>
-              <button class="delete" data-type="laundry" data-index="${index}" title="Hapus"><i class="fas fa-trash-alt"></i></button>
-              <button class="whatsapp" onclick="sendWA('${data.nomor}','${data.nama}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+              <button class="edit" data-type="laundry" data-index="${index}" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete" data-type="laundry" data-index="${index}" title="Hapus">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+              <button class="whatsapp" onclick="sendWA('${data.nomor}','${data.nama}')" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </button>
             </div>
           </td>
         </tr>`;
         laundryBody.innerHTML += row;
       });
 
+      // Render Pengeluaran
       pengeluaranBody.innerHTML = "";
       pengeluaranData.forEach((data, index) => {
-        let tanggal = new Date(data.tanggal);
-        if (tanggal.getMonth() === bulan && tanggal.getFullYear() === tahun) {
-          totalPengeluaranBulanan += data.jumlah;
+        const tanggalObj = new Date(data.tanggal);
+        if (tanggalObj.getMonth() === bulan && tanggalObj.getFullYear() === tahun) {
+          totalPengeluaranBulanan += Number(data.jumlah) || 0;
         }
+
         const row = `<tr>
           <td>${index + 1}</td>
           <td>${data.keterangan}</td>
@@ -827,16 +813,22 @@
           <td>${data.tanggal}</td>
           <td>
             <div class="action-buttons">
-              <button class="edit" data-type="pengeluaran" data-index="${index}" title="Edit"><i class="fas fa-edit"></i></button>
-              <button class="delete" data-type="pengeluaran" data-index="${index}" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+              <button class="edit" data-type="pengeluaran" data-index="${index}" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete" data-type="pengeluaran" data-index="${index}" title="Hapus">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </div>
           </td>
         </tr>`;
         pengeluaranBody.innerHTML += row;
       });
 
+      // Net income bulanan
       const penghasilanBersih = pendapatanBulanan - totalPengeluaranBulanan;
 
+      // Update Cards
       document.querySelector("#pendapatanHarian p").innerText = formatRupiah(pendapatanHarian);
       document.querySelector("#pendapatanBulanan p").innerText = formatRupiah(pendapatanBulanan);
       document.querySelector("#pendapatanTahunan p").innerText = formatRupiah(pendapatanTahunan);
@@ -852,7 +844,7 @@
       e.preventDefault();
       const nama = document.getElementById("nama").value;
       const nomor = document.getElementById("nomor").value;
-      const berat = document.getElementById("berat").value.replace(',', '.');
+      const berat = document.getElementById("berat").value.replace(',', '.'); // simpan string
       const harga = parseInt(document.getElementById("harga").value);
       const tanggal = document.getElementById("tanggal").value;
       const editIndex = document.getElementById("editIndexLaundry").value;
@@ -936,8 +928,8 @@
     downloadBtn.addEventListener("click", () => {
       let csv = "No,Nama,No WA,Berat (Kg),Harga (Rp),Total,Tanggal\n";
       laundryData.forEach((d, i) => {
-        const berat = parseFloat(d.berat.toString().replace(',', '.'));
-        const total = berat * d.harga;
+        const berat = parseFloat(String(d.berat).replace(',', '.'));
+        const total = (berat || 0) * (Number(d.harga) || 0);
         csv += `${i + 1},${d.nama},${d.nomor},${d.berat},${d.harga},${total},${d.tanggal}\n`;
       });
 
