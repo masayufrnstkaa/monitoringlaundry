@@ -510,7 +510,7 @@
     }
   </style>
 </head>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <body>
   <header>
     <div class="topbar">
@@ -787,6 +787,9 @@
               <button class="whatsapp" onclick="sendWA('${data.nomor}','${data.nama}')" title="WhatsApp">
                 <i class="fab fa-whatsapp"></i>
               </button>
+              <button onclick="notaThermal(${index})" title="Nota">
+                <i class="fas fa-receipt"></i>
+              </button>
             </div>
           </td>
         </tr>`;
@@ -964,6 +967,58 @@
     });
 
     renderTable();
+
+    function notaThermal(index) {
+      const { jsPDF } = window.jspdf;
+
+      const d = laundryData[index];
+      const berat = parseFloat(String(d.berat).replace(',', '.')) || 0;
+      const harga = Number(d.harga) || 0;
+      const total = berat * harga;
+
+      const doc = new jsPDF({
+        unit: "mm",
+        format: [58, 120] // thermal 58mm
+      });
+
+      let y = 6;
+      doc.setFont("courier", "bold");
+      doc.setFontSize(10);
+      doc.text("Barokfi Laundry", 29, y, { align: "center" });
+
+      y += 4;
+      doc.setFontSize(7);
+      doc.setFont("courier", "normal");
+      doc.text("--------------------------------", 29, y, { align: "center" });
+
+      y += 4;
+      doc.text(`Nama   : ${d.nama}`, 2, y);
+      y += 4;
+      doc.text(`WA     : ${d.nomor}`, 2, y);
+      y += 4;
+      doc.text(`Tanggal: ${d.tanggal}`, 2, y);
+
+      y += 4;
+      doc.text("--------------------------------", 29, y, { align: "center" });
+
+      y += 4;
+      doc.text(`Berat : ${berat} Kg`, 2, y);
+      y += 4;
+      doc.text(`Harga : ${formatRupiah(harga)}`, 2, y);
+
+      y += 5;
+      doc.setFont("courier", "bold");
+      doc.text(`TOTAL : ${formatRupiah(total)}`, 2, y);
+
+      y += 6;
+      doc.setFont("courier", "normal");
+      doc.text("--------------------------------", 29, y, { align: "center" });
+      y += 4;
+      doc.text("Terima kasih", 29, y, { align: "center" });
+
+      doc.save(`Nota_${d.nama}_${d.tanggal}.pdf`);
+    }
+
   </script>
 </body>
 
